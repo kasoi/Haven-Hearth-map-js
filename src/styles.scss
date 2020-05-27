@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('../node_modules/leaflet/dist/leaflet.css');
+
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #d0d0d0;
+  color: #333;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  z-index: 9999!important;
+}
+
+.top-menu {
+  position: absolute;
+  z-index: 1002;
+
+  width: 400;
+  height: 250;
+  background-color: #ffcc00;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
