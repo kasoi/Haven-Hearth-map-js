@@ -6,8 +6,8 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item (click)="goHome()">Go home</a>
-      <a mat-list-item href="#">Link 2</a>
-      <a mat-list-item href="#">Link 3</a>
+      <!-- <a mat-list-item href="#">Link 2</a> -->
+      <!-- <a mat-list-item href="#">Link 3</a> -->
       <a mat-list-item (click)="drawer.toggle()">close</a>
     </mat-nav-list>
     <mat-select [formControl]="typeControl">
@@ -15,6 +15,33 @@
         {{type}}
       </mat-option>
     </mat-select>
+
+    <form class="card" [formGroup]="form" (ngSubmit)="login()">
+      <div
+        class="form-control"
+        [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}">
+
+        <label form="email">Email</label>
+        <input div="email" type="email" formControlName="email">
+        <div class="validation" *ngIf="form.get('email').invalid">
+          <small>ti poc</small>
+        </div>
+      </div>
+
+      <div
+        class="form-control"
+        [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}">
+        <label form="password">Password</label>
+        <input div="password" type="password" formControlName="password">
+        <div class="validation" *ngIf="form.get('password').invalid">
+          <small>ti realno poc</small>
+        </div>
+      </div>
+
+      <button type="submit">test</button>
+    </form>
+
+    <!-- <button (click)="sendMarker()">send test markers</button> -->
   </mat-sidenav>
   <mat-sidenav-content>
   </mat-sidenav-content>

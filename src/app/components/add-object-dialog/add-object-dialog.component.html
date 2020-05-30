@@ -1,0 +1,32 @@
+<mat-nav-list class="bottom-sheet">
+  <mat-form-field>
+    <img *ngIf="selectedResourceType.icon !== null"  src={{selectedResourceType.icon}}/>
+    <mat-select (value)="selectedResourceType" (selectionChange)="selectionChanged($event)">
+      <mat-option *ngFor="let type of resourceTypes" value="{{type.name}}">
+        <img *ngIf="type.icon !== null"  src="{{type.icon}}"/>{{type.name}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<p>
+  <mat-form-field class="input-form-field">
+    <mat-label>{{selectedResourceType.name}} resource name or description</mat-label>
+    <input matInput type="text" [(ngModel)]="resourceName">
+    <button mat-button *ngIf="resourceName" matSuffix mat-icon-button aria-label="Clear" (click)="resourceName=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</p>
+
+<p>
+  <mat-form-field class="input-form-field">
+    <mat-label>From</mat-label>
+    <input matInput type="text" disabled="true" value="//TODO">
+  </mat-form-field>
+</p>
+<!-- <mat-divider></mat-divider> -->
+<p>
+  <button mat-raised-button (click)="sendMarker()">Send marker</button>
+</p>
+
+</mat-nav-list>

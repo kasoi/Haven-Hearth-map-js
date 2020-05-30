@@ -11,8 +11,20 @@ body {
   color: #333;
 }
 
-.cdk-global-overlay-wrapper, .cdk-overlay-container {
-  z-index: 9999!important;
+// .cdk-global-overlay-wrapper, .cdk-overlay-container {
+//   z-index: 9990 !important;
+// }
+
+// .cdk-overlay-container, .cdk-overlay-pane {
+//   z-index: 9991 !important;
+// }
+
+.mat-select-panel-wrap ng-trigger ng-trigger-transformPanelWrap ng-star-inserted {
+  z-index: 9992 !important;
+}
+
+.ng-trigger {
+  z-index: 9993 !important;
 }
 
 .top-menu {
@@ -22,6 +34,43 @@ body {
   width: 400;
   height: 250;
   background-color: #ffcc00;
+}
+
+.topmenubtn {
+  position: fixed;
+  display: block;
+  width: 52px;
+  height: 52px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  background-color: rgba(220, 220, 220, 0.8);
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px #000;
+  top: 10px;
+}
+
+.button-home {
+  background-image: url('assets/images/menu.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 60px;
+}
+
+.button-add {
+  background-image: url('assets/images/add.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  left: 126px;
+}
+
+.leaflet-map {
+  height: 100%;
+}
+
+.leaflet-container.crosshair-cursor-enabled {
+  cursor:alias;
 }
 
 html, body { height: 100%; }

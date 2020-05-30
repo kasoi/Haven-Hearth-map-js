@@ -1,6 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AuthInterceptor } from './shared/auth.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Provider } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,11 +19,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { AddObjectDialogComponent } from './components/add-object-dialog/add-object-dialog.component';
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  multi: true,
+  useClass: AuthInterceptor
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavComponent,
+    AddObjectDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,9 +48,12 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     MatIconModule,
     MatListModule,
     LeafletModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

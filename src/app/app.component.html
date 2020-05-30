@@ -1,15 +1,17 @@
 <div class="top-menu" *ngIf="!mainmenu.isShown()">
-  how to fix that shit <button (click)="mainmenu.toggleMenu()">open</button>
-  navbar is {{ mainmenu.isShown() ? 'opened' : 'hidden'}}
+  <!-- how to fix that shit <button (click)="mainmenu.toggleMenu()">open</button> -->
+  <!-- navbar is {{ mainmenu.isShown() ? 'opened' : 'hidden'}} -->
+  <button class="topmenubtn button-home" (click)="mainmenu.toggleMenu()"></button>
+  <button class="topmenubtn button-add" (click)="startAddMarker()"></button>
 </div>
 
 
-<div style="height: 100%;"
+<div class="leaflet-map"
       *ngIf="options != null"
       (leafletMapReady)="onMapReady($event)"
       (leafletClick)="onMapClick($event)"
-     leaflet
-     [leafletOptions]="options">
+      leaflet
+      [leafletOptions]="options">
 </div>
 <app-main-nav #mainmenu>
 </app-main-nav>

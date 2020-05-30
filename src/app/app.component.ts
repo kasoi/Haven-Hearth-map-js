@@ -1,10 +1,13 @@
+import { AddObjectDialogComponent } from './components/add-object-dialog/add-object-dialog.component';
+import { MarkersService } from './shared/services/markers.service';
 import { MapService } from './shared/map.service';
-import { MapOptions } from './shared/interfaces';
+import { MapOptions, MapMarker } from './shared/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import * as L from 'leaflet';
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { latLng, CRS, Map, tileLayer, point, LeafletMouseEvent } from 'leaflet';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -12,26 +15,30 @@ import { latLng, CRS, Map, tileLayer, point, LeafletMouseEvent } from 'leaflet';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  isAddingMarker = false;
+
   map: Map;
 
-  constructor(private http: HttpClient, private mapService: MapService) {}
+  constructor(
+      private http: HttpClient,
+      private mapService: MapService,
+      private markersService: MarkersService,
+      private addMarkerDialog: MatDialog) {}
 
   path: string = 'assets/map/' + '2/tile_1_0.png';
 
   mapOptions: MapOptions = null;
   options = null;
 
-  title = 'haven';
-
   ngOnInit(): void {
 
     this.http.get('assets/map/6/options.json').subscribe( (response) => {
       const scriptMapOptions = response as MapOptions;
-      console.log('json response:', response as MapOptions);
       this.createOptions(scriptMapOptions);
     });
 
-    this.mapService.homeClicked.subscribe( (data) => {
+    this.mapService.homeClicked.subscribe( () => {
       this.goHome();
     });
   }
@@ -70,18 +77,41 @@ export class AppComponent implements OnInit {
     this.map = map;
     this.goHome();
 
-      // this.map.on("click", e => {
-      //   console.log(e.latlng); // get the coordinates
-      //   L.marker([e.latlng.lat, e.latlng.lng], this.markerIcon).addTo(this.map); // add the marker onclick
-      // });
+    this.markersService.getMarkers().subscribe(response => {
+      for (const marker of response) {
+        this.addMarker(marker as MapMarker);
+      }
+    });
+  }
+
+  addMarker(marker: MapMarker): void {
+    const m = L.marker(marker.position);
+    m.bindPopup(`<b>${marker.header}</b> <br> ${marker.text}`);
+    m.addTo(this.map);
   }
 
   onMapClick(value: LeafletMouseEvent) {
+    if (this.isAddingMarker === false) { return; }
+
     const latlng = value.latlng;
     const layerPoint = value.layerPoint;
 
-    console.log('leaflet click:', 'lat lng:', latlng, 'point:', layerPoint);
-    L.marker(latlng).addTo(this.map);
+    L.marker(latlng).addTo(this.map).bindPopup('new marker');
+
+    const diag = this.addMarkerDialog.open(AddObjectDialogComponent,
+      {
+        data: { position: latlng }
+      });
+  }
+
+  startAddMarker(): void {
+    L.DomUtil.addClass(this.map.getContainer(), 'crosshair-cursor-enabled');
+    this.isAddingMarker = true;
+  }
+
+  stopAddMarker(): void {
+    L.DomUtil.removeClass(this.map.getContainer(), 'crosshair-cursor-enabled');
+    this.isAddingMarker = false;
   }
 
   toggleMenu(): void {
