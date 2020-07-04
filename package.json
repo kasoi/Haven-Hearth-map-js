@@ -23,6 +23,7 @@
     "@angular/router": "~9.1.0",
     "@asymmetrik/ngx-leaflet": "^7.0.0",
     "leaflet": "^1.6.0",
+    "ngx-slimscroll": "^9.3.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

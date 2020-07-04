@@ -1,8 +1,6 @@
-<div class="top-menu" *ngIf="!mainmenu.isShown()">
-  <!-- how to fix that shit <button (click)="mainmenu.toggleMenu()">open</button> -->
-  <!-- navbar is {{ mainmenu.isShown() ? 'opened' : 'hidden'}} -->
-  <button class="topmenubtn button-home" (click)="mainmenu.toggleMenu()"></button>
-  <button class="topmenubtn button-add" (click)="startAddMarker()"></button>
+<div [ngClass]="mainmenu.isShown() ? 'top-menu-opened' : 'top-menu'" [@popOverState]="stateName">
+  <button class="topmenubtn button-menu" (click)="mainmenu.toggleMenu()"></button>
+  <button *ngIf="auth.isAuthenticated()" class="topmenubtn button-add" (click)="startAddMarker()"></button>
 </div>
 
 
@@ -13,5 +11,5 @@
       leaflet
       [leafletOptions]="options">
 </div>
-<app-main-nav #mainmenu>
+<app-main-nav #mainmenu (typeSelected)="onTypeSelected($event)" (resourceClicked)="onResourceClicked($event)">
 </app-main-nav>

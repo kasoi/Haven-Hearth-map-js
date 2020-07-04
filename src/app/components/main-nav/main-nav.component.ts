@@ -1,6 +1,6 @@
 import { MarkerType } from './../../shared/enums/marker-type.enum';
 import { MarkersService } from './../../shared/services/markers.service';
-import { User, MapMarker } from './../../shared/interfaces';
+import { User, MapMarker, ResourceMarker } from './../../shared/interfaces';
 import { AuthService } from './../../shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
@@ -12,6 +12,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { LatLng } from 'leaflet';
+import { MatSelectChange } from '@angular/material/select';
+import {CdkScrollableModule} from '@angular/cdk/scrolling';
+import { ISlimScrollOptions } from 'ngx-slimscroll';
 
 @Component({
   selector: 'app-main-nav',
@@ -20,12 +23,29 @@ import { LatLng } from 'leaflet';
 })
 export class MainNavComponent implements OnInit {
 
+  @Input() resources: MapMarker[];
+
+  @Output() typeSelected = new EventEmitter<ResourceMarker>();
+  @Output() resourceClicked = new EventEmitter<MapMarker>();
+
+  opts: ISlimScrollOptions;
+
+
   @ViewChild('drawer') navbar: MatSidenav;
 
   form: FormGroup;
+  public loginFormOpened = false;
 
   typeControl: FormControl = new FormControl('', Validators.required);
-  types: string[] = ['all', 'trees', 'resources'];
+
+  resourceTypes: ResourceMarker[] = [
+    {type: null, name: 'All'},
+    {type: MarkerType.Default, name: 'Default'},
+    {type: MarkerType.Tree, name: 'Tree', icon: './assets/images/resources/select/tree.png'},
+    {type: MarkerType.Clay, name: 'Clay', icon: './assets/images/resources/select/clay.png'},
+    {type: MarkerType.Water, name: 'Water', icon: './assets/images/resources/select/water.png'},
+    {type: MarkerType.Animal, name: 'Animal', icon: './assets/images/resources/select/animal.png'}];
+  selectedType = this.resourceTypes[0];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -41,7 +61,7 @@ export class MainNavComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     public mapService: MapService,
-    private auth: AuthService,
+    public auth: AuthService,
     private markersService: MarkersService) {}
 
   ngOnInit(): void {
@@ -49,15 +69,30 @@ export class MainNavComponent implements OnInit {
       email: new FormControl(environment.testLogin, [Validators.email, Validators.required]),
       password: new FormControl(environment.testPassword, [Validators.required])
     });
+
+
+    this.opts = {
+      position: 'right',
+      barBackground: '#939393',
+      barOpacity: '0.8',
+      barWidth: '4',
+      barBorderRadius: '1',
+      // gridBackground: string; // #D9D9D9
+      gridOpacity: '0',
+      // gridWidth?: string; // 2
+      // gridBorderRadius?: string; // 20
+      gridMargin: '10',
+      alwaysVisible: true,
+      visibleTimeout: 700,
+      // scrollSensitivity?: number; // 1
+      // alwaysPreventDefaultScroll?: boolean; // true
+    }
   }
 
   login(): void {
-    console.log('try to login. Login: ', this.form.get('email').value, 'password:', this.form.get('password').value);
-    console.log('form:', this.form);
     const user: User = { email: this.form.get('email').value, password: this.form.get('password').value  };
     this.auth.login(user).subscribe(result => {
-      console.log('login????????? result', result);
-
+      console.log('login result', result);
     });
   }
 
@@ -66,7 +101,7 @@ export class MainNavComponent implements OnInit {
   }
 
   goHome(): void {
-    this.mapService.homeClicked.emit('alo');
+    this.mapService.homeClicked.emit('home');
   }
 
   sendMarker(): void {
@@ -83,6 +118,15 @@ export class MainNavComponent implements OnInit {
       console.log('add marker response:', response);
 
     });
+  }
+
+  typeControl_onSelect(change: MatSelectChange): void {
+    const resource: ResourceMarker = change.value as ResourceMarker;
+    this.typeSelected.emit(resource);
+  }
+
+  onResourceClick(marker: MapMarker): void {
+    this.resourceClicked.emit(marker);
   }
 
 }

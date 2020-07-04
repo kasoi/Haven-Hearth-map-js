@@ -16,6 +16,8 @@ export interface User {
 export interface FirebaseLoginResponse {
   idToken: string;
   expiresIn: string;
+  displayName: string;
+  email: string;
 }
 
 export interface MapMarker {
@@ -24,6 +26,13 @@ export interface MapMarker {
   text: string;
   type: string;
   from?: string;
+}
+
+export interface MarkerIcon {
+  icon: string;
+  type: string;
+  size?: [number, number];
+  shadow?: string;
 }
 
 export interface FbAddMarkerResponse {

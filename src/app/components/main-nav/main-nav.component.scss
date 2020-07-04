@@ -1,19 +1,30 @@
 .sidenav-container {
   height: 100%;
   position: absolute;
-  z-index: 1001;
+
+  z-index: 10;
+}
+
+.resources-list-viewport {
+  height: 500px;
+  width: 100%;
+  border: 0px;
 }
 
 .sidenav {
   width: 200px;
 }
 
-.sidenav .mat-toolbar {
-  background: inherit;
+.sidenav-form {
+  margin-left: 1rem;
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
+// .sidenav .mat-toolbar {
+//   background: inherit;
+// }
+
+// .mat-toolbar.mat-primary {
+//   position: sticky;
+//   top: 0;
+//   z-index: 1;
+// }

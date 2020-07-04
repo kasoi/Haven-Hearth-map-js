@@ -1,16 +1,22 @@
+<p>New marker</p>
+
 <mat-nav-list class="bottom-sheet">
   <mat-form-field>
-    <img *ngIf="selectedResourceType.icon !== null"  src={{selectedResourceType.icon}}/>
-    <mat-select (value)="selectedResourceType" (selectionChange)="selectionChanged($event)">
+    <!-- <img *ngIf="selectedResourceType.icon !== null"  src={{selectedResourceType.icon}}/> -->
+    <mat-select [(ngModel)]="selectedResourceTypeValue" (selectionChange)="selectionChanged($event)">
       <mat-option *ngFor="let type of resourceTypes" value="{{type.name}}">
-        <img *ngIf="type.icon !== null"  src="{{type.icon}}"/>{{type.name}}
+        <div class="mat-select-field">
+          <img class="mat-select-image" *ngIf="type.icon !== null"  src="{{type.icon}}"/>
+          <span *ngIf="type.icon !== null">&nbsp;&nbsp;&nbsp;</span>
+          <span class="mat-select-text">{{type.name}}</span>
+        </div>
       </mat-option>
     </mat-select>
 </mat-form-field>
 
 <p>
   <mat-form-field class="input-form-field">
-    <mat-label>{{selectedResourceType.name}} resource name or description</mat-label>
+    <mat-label>{{selectedResourceType.name}} resource description</mat-label>
     <input matInput type="text" [(ngModel)]="resourceName">
     <button mat-button *ngIf="resourceName" matSuffix mat-icon-button aria-label="Clear" (click)="resourceName=''">
       <mat-icon>close</mat-icon>
@@ -26,7 +32,7 @@
 </p>
 <!-- <mat-divider></mat-divider> -->
 <p>
-  <button mat-raised-button (click)="sendMarker()">Send marker</button>
+  <button mat-raised-button (click)="sendMarker()">ADD</button>
 </p>
 
 </mat-nav-list>

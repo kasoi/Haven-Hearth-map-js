@@ -18,9 +18,12 @@ export class AddObjectDialogComponent implements OnInit {
   resourceTypes: ResourceMarker[] = [
     {type: MarkerType.Default, name: 'Default'},
     {type: MarkerType.Tree, name: 'Tree', icon: './assets/images/resources/select/tree.png'},
-    {type: MarkerType.Clay, name: 'Clay'},
-    {type: MarkerType.Water, name: 'Water'},
-    {type: MarkerType.Animal, name: 'Animal'}];
+    // https://www.flaticon.com/authors/freepik
+    {type: MarkerType.Clay, name: 'Clay', icon: './assets/images/resources/select/clay.png'},
+    // https://icons8.com/icons/set/water
+    {type: MarkerType.Water, name: 'Water', icon: './assets/images/resources/select/water.png'},
+    // https://www.flaticon.com/authors/freepik
+    {type: MarkerType.Animal, name: 'Animal', icon: './assets/images/resources/select/animal.png'}];
 
   selectedResourceType: ResourceMarker = this.resourceTypes[0];
   selectedResourceTypeValue = this.selectedResourceType.name;
@@ -55,6 +58,7 @@ export class AddObjectDialogComponent implements OnInit {
 
     this.markersService.addMarker(marker).subscribe(response => {
       // todo
+      this.dialogRef.close();
     });
 
   }

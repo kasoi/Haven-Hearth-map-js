@@ -8,41 +8,52 @@
       <a mat-list-item (click)="goHome()">Go home</a>
       <!-- <a mat-list-item href="#">Link 2</a> -->
       <!-- <a mat-list-item href="#">Link 3</a> -->
-      <a mat-list-item (click)="drawer.toggle()">close</a>
+      <a mat-list-item (click)="drawer.toggle()">Close</a>
     </mat-nav-list>
-    <mat-select [formControl]="typeControl">
-      <mat-option *ngFor="let type of types" [value]="type">
-        {{type}}
-      </mat-option>
-    </mat-select>
 
-    <form class="card" [formGroup]="form" (ngSubmit)="login()">
-      <div
-        class="form-control"
-        [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}">
+    <p></p>
 
-        <label form="email">Email</label>
-        <input div="email" type="email" formControlName="email">
-        <div class="validation" *ngIf="form.get('email').invalid">
-          <small>ti poc</small>
-        </div>
-      </div>
+    <mat-form-field class="sidenav-form">
+      <mat-select [(ngModel)]="selectedType" [formControl]="typeControl" (selectionChange)="typeControl_onSelect($event)">
+        <mat-option *ngFor="let type of resourceTypes" [value]="type">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <div
-        class="form-control"
-        [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}">
-        <label form="password">Password</label>
-        <input div="password" type="password" formControlName="password">
-        <div class="validation" *ngIf="form.get('password').invalid">
-          <small>ti realno poc</small>
-        </div>
-      </div>
+      <cdk-virtual-scroll-viewport slimScroll [options]="opts" itemSize="50" class="resources-list-viewport">
+        <mat-nav-list>
+          <mat-list-item *ngFor="let item of resources" (click)="onResourceClick(item)" > {{item.header}} </mat-list-item>
+        </mat-nav-list>
+      </cdk-virtual-scroll-viewport>
 
-      <button type="submit">test</button>
-    </form>
-
-    <!-- <button (click)="sendMarker()">send test markers</button> -->
+    <div class="login-form" *ngIf="!auth.isAuthenticated()">
+      <form *ngIf="loginFormOpened" class="card" [formGroup]="form" (ngSubmit)="login()">
+        <p>
+          <mat-form-field class="input-form-field">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" value="">
+            <mat-error *ngIf="form.get('email').invalid">Please enter a valid email</mat-error>
+          </mat-form-field>
+          <mat-form-field class="input-form-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" value="">
+            <mat-error *ngIf="form.get('password').invalid">Please enter a valid password</mat-error>
+          </mat-form-field>
+          <button mat-raised-button type="submit">Login</button>
+        </p>
+        <span><a class="url-dashed" (click)="loginFormOpened = false">Hide</a></span>
+      </form>
+      <span *ngIf="!loginFormOpened"><a class="url-dashed" (click)="loginFormOpened = true">Log in</a></span>
+    </div>
+    <div class="login-form" *ngIf="auth.isAuthenticated()">
+      {{auth.userName}}
+      <p>
+        <span><a class="url-dashed" (click)="auth.logout()">Log out</a></span>
+      </p>
+    </div>
   </mat-sidenav>
-  <mat-sidenav-content>
-  </mat-sidenav-content>
+
+  <!-- <mat-sidenav-content>
+  </mat-sidenav-content> -->
 </mat-sidenav-container>

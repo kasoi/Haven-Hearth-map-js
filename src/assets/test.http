@@ -1,0 +1,29 @@
+POST https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD2nhtzahFWGZJGfK5YFTjBQBYHjY-PceU
+content-type: application/json
+
+{
+  email: "admin@a.dmin",
+  password: "adminchik"
+}
+
+#######
+POST https://haven-map-8964b.firebaseio.com//markers.json HTTP/1.1
+content-type: application/json
+
+{"firebase":"soset infa 100"}
+
+
+#######
+POST https://angular-blog-81b20.firebaseio.com/posts.json?auth=eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMmM1NDk4YTcwYjc0MjQ5NzI2ZDhmYjYxODlkZWI3NGMzNWM4MGEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYW5ndWxhci1ibG9nLTgxYjIwIiwiYXVkIjoiYW5ndWxhci1ibG9nLTgxYjIwIiwiYXV0aF90aW1lIjoxNTkwNjg2NDg2LCJ1c2VyX2lkIjoiWHNxTGhpOGpqN2FlRU9INDFMQVNBckxGalJJMiIsInN1YiI6IlhzcUxoaThqajdhZUVPSDQxTEFTQXJMRmpSSTIiLCJpYXQiOjE1OTA2ODY0ODYsImV4cCI6MTU5MDY5MDA4NiwiZW1haWwiOiJhZG1pbkBhbmd1bGFyLWJsb2cuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbImFkbWluQGFuZ3VsYXItYmxvZy5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.fFzWmiVWcBPt2y6ijIgnN9WjIN-AYNRXDUEEcPwufqk7khkt6lBVXlASWU1RpCNKFbzw1OtYWwZdpMTpVr-f7yamkgL8S8IYkbamcM8QIflvt75d0kiCzkIGPeWqE7VsHXbRHN98HOAFVfBn7Tm6wfMpegAVKQz3-3hzbccs0WElhjKYYlv7Hc0zjevFCJjoBMY7uAf9d5BEuUt4SqH6XlSFRCviwkaOjpoWnXuYRQK9Cuh3ru-WAXYGWV-6_8T-YdqpoCToGgnpS1O54WKX7B0qiTfQ-mE6ZyE2hiP_cElY3koJ3s1rXC93PeK4dEMLP3t3A-D6NKeByfU90dFLdg HTTP/1.1
+content-type: application/json
+
+{"firebase":"soset infa 100"}
+
+
+#######
+GET http://openeventor.ru/api/get_events HTTP/1.1
+Authorization: eWFAbGVuZXYucnU6cG9zdGVyODY=
+
+
+###
+POST http://openeventor.ru/event/262a9ea6af4e459c92656a62b3db5cb4/plugins/ostis2/addsplit

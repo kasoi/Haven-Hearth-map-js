@@ -17,9 +17,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { CdkScrollableModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { AddObjectDialogComponent } from './components/add-object-dialog/add-object-dialog.component';
+import { NgSlimScrollModule, SLIMSCROLL_DEFAULTS, ISlimScrollOptions } from 'ngx-slimscroll';
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -35,6 +38,7 @@ const INTERCEPTOR_PROVIDER: Provider = {
   ],
   imports: [
     BrowserModule,
+    NgSlimScrollModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -51,9 +55,17 @@ const INTERCEPTOR_PROVIDER: Provider = {
     MatSelectModule,
     MatInputModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    CdkScrollableModule,
+    ScrollingModule
   ],
-  providers: [INTERCEPTOR_PROVIDER],
+  providers: [INTERCEPTOR_PROVIDER,
+    {
+      provide: SLIMSCROLL_DEFAULTS,
+      useValue: {
+        alwaysVisible : false
+      } as ISlimScrollOptions
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
